@@ -116,23 +116,23 @@ class Responsavel(models.Model):
         return self.cpf_responsavel
 
 
-class Secretario(models.Model):
-    cpf_secretario = models.CharField(
-        max_length=14,
-        verbose_name='CPF')
-    rg_secretario = models.CharField(max_length=25, verbose_name='RG')
-    orgao_expeditor_rg = models.CharField(max_length=50)
-    estado_expeditor = models.ForeignKey('Uf')
-    nome_secretario = models.CharField(max_length=100)
-    cargo_secretario = models.CharField(max_length=100)
-    instituicao_secretario = models.CharField(max_length=100)
-    telefone_um = models.CharField(max_length=25)
-    telefone_dois = models.CharField(max_length=25, blank=True)
-    telefone_tres = models.CharField(max_length=25, blank=True)
-    email_institucional_secretario = models.EmailField()
-
-    def __str__(self):
-        return self.cpf_secretario
+# class Secretario(models.Model):
+#     cpf_secretario = models.CharField(
+#         max_length=14,
+#         verbose_name='CPF')
+#     rg_secretario = models.CharField(max_length=25, verbose_name='RG')
+#     orgao_expeditor_rg = models.CharField(max_length=50)
+#     estado_expeditor = models.ForeignKey('Uf')
+#     nome_secretario = models.CharField(max_length=100)
+#     cargo_secretario = models.CharField(max_length=100)
+#     instituicao_secretario = models.CharField(max_length=100)
+#     telefone_um = models.CharField(max_length=25)
+#     telefone_dois = models.CharField(max_length=25, blank=True)
+#     telefone_tres = models.CharField(max_length=25, blank=True)
+#     email_institucional_secretario = models.EmailField()
+#
+#     def __str__(self):
+#         return self.cpf_secretario
 
 
 class Usuario(models.Model):
@@ -140,7 +140,7 @@ class Usuario(models.Model):
     nome_usuario = models.CharField(max_length=100)
     municipio = models.OneToOneField('Municipio', blank=True, null=True)
     responsavel = models.OneToOneField('Responsavel', blank=True, null=True)
-    secretario = models.OneToOneField('Secretario', blank=True, null=True)
+    # secretario = models.OneToOneField('Secretario', blank=True, null=True)
     plano_trabalho = models.OneToOneField(
         'planotrabalho.PlanoTrabalho',
         blank=True,

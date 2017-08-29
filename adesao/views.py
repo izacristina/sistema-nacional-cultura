@@ -15,10 +15,10 @@ from django.template.loader import render_to_string
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.db.models import Q, Count
 
-from adesao.models import Municipio, Responsavel, Secretario, Usuario, Historico, Uf, Cidade
+from adesao.models import Municipio, Responsavel,  Usuario, Historico, Uf, Cidade
 from planotrabalho.models import Conselheiro, PlanoTrabalho
 from adesao.forms import CadastrarUsuarioForm, CadastrarMunicipioForm
-from adesao.forms import CadastrarResponsavelForm, CadastrarSecretarioForm
+from adesao.forms import CadastrarResponsavelForm
 from adesao.utils import enviar_email_conclusao, verificar_anexo
 
 from wkhtmltopdf.views import PDFTemplateView
@@ -38,7 +38,7 @@ def fale_conosco(request):
 @login_required
 def home(request):
     ente_federado = request.user.usuario.municipio
-    secretario = request.user.usuario.secretario
+    # secretario = request.user.usuario.secretario
     responsavel = request.user.usuario.responsavel
     situacao = request.user.usuario.estado_processo
     historico = Historico.objects.filter(usuario=request.user.usuario)
@@ -47,7 +47,7 @@ def home(request):
     if request.user.is_staff:
         return redirect('gestao:acompanhar_adesao')
 
-    if ente_federado and secretario and responsavel and int(situacao) < 1:
+    if ente_federado and responsavel and int(situacao) < 1:
         request.user.usuario.estado_processo = '1'
         request.user.usuario.save()
         message_txt = render_to_string('conclusao_cadastro.txt',
@@ -341,31 +341,31 @@ class CadastrarResponsavel(CreateView):
         return super(CadastrarResponsavel, self).dispatch(*args, **kwargs)
 
 
-@login_required
-def importar_secretario(request):
-    secretario = request.user.usuario.secretario
-    # TODO: Refatorar essa importação depois que a migração for realizada
-    responsavel = Responsavel()
-    if secretario:
-        responsavel.cpf_responsavel = secretario.cpf_secretario
-        responsavel.rg_responsavel = secretario.rg_secretario
-        responsavel.orgao_expeditor_rg = secretario.orgao_expeditor_rg
-        responsavel.estado_expeditor = secretario.estado_expeditor
-        responsavel.nome_responsavel = secretario.nome_secretario
-        responsavel.cargo_responsavel = secretario.cargo_secretario
-        responsavel.instituicao_responsavel = secretario.instituicao_secretario
-        responsavel.telefone_um = secretario.telefone_um
-        responsavel.telefone_dois = secretario.telefone_dois
-        responsavel.telefone_tres = secretario.telefone_tres
-        responsavel.email_institucional_responsavel = secretario.email_institucional_secretario
-        try:
-            responsavel.full_clean()
-            responsavel.save()
-        except ValidationError:
-            return redirect('adesao:responsavel')
-        request.user.usuario.responsavel = responsavel
-        request.user.usuario.save()
-    return redirect('adesao:responsavel')
+# @login_required
+# def importar_secretario(request):
+#     secretario = request.user.usuario.secretario
+#     # TODO: Refatorar essa importação depois que a migração for realizada
+#     responsavel = Responsavel()
+#     if secretario:
+#         responsavel.cpf_responsavel = secretario.cpf_secretario
+#         responsavel.rg_responsavel = secretario.rg_secretario
+#         responsavel.orgao_expeditor_rg = secretario.orgao_expeditor_rg
+#         responsavel.estado_expeditor = secretario.estado_expeditor
+#         responsavel.nome_responsavel = secretario.nome_secretario
+#         responsavel.cargo_responsavel = secretario.cargo_secretario
+#         responsavel.instituicao_responsavel = secretario.instituicao_secretario
+#         responsavel.telefone_um = secretario.telefone_um
+#         responsavel.telefone_dois = secretario.telefone_dois
+#         responsavel.email_institucional_responsavel = secretario.email_institucional_secretario
+#         responsavel.telefone_tres = secretario.telefone_tres
+#         try:
+#             responsavel.full_clean()
+#             responsavel.save()
+#         except ValidationError:
+#             return redirect('adesao:responsavel')
+#         request.user.usuario.responsavel = responsavel
+#         request.user.usuario.save()
+#     return redirect('adesao:responsavel')
 
 
 class AlterarResponsavel(UpdateView):
@@ -375,33 +375,33 @@ class AlterarResponsavel(UpdateView):
     success_url = reverse_lazy('adesao:sucesso_responsavel')
 
 
-def sucesso_secretario(request):
-    return render(request, 'secretario/mensagem_sucesso_secretario.html')
+# def sucesso_secretario(request):
+#     return render(request, 'secretario/mensagem_sucesso_secretario.html')
 
 
-class CadastrarSecretario(CreateView):
-    form_class = CadastrarSecretarioForm
-    template_name = 'secretario/cadastrar_secretario.html'
-    success_url = reverse_lazy('adesao:sucesso_secretario')
-
-    def form_valid(self, form):
-        self.request.user.usuario.secretario = form.save()
-        self.request.user.usuario.save()
-        return super(CadastrarSecretario, self).form_valid(form)
-
-    def dispatch(self, *args, **kwargs):
-        secretario = self.request.user.usuario.secretario
-        if secretario:
-            return redirect('adesao:alterar_secretario', pk=secretario.id)
-
-        return super(CadastrarSecretario, self).dispatch(*args, **kwargs)
-
-
-class AlterarSecretario(UpdateView):
-        form_class = CadastrarSecretarioForm
-        model = Secretario
-        template_name = 'secretario/cadastrar_secretario.html'
-        success_url = reverse_lazy('adesao:sucesso_secretario')
+# class CadastrarSecretario(CreateView):
+#     form_class = CadastrarSecretarioForm
+#     template_name = 'secretario/cadastrar_secretario.html'
+#     success_url = reverse_lazy('adesao:sucesso_secretario')
+#
+#     def form_valid(self, form):
+#         self.request.user.usuario.secretario = form.save()
+#         self.request.user.usuario.save()
+#         return super(CadastrarSecretario, self).form_valid(form)
+#
+#     def dispatch(self, *args, **kwargs):
+#         secretario = self.request.user.usuario.secretario
+#         if secretario:
+#             return redirect('adesao:alterar_secretario', pk=secretario.id)
+#
+#         return super(CadastrarSecretario, self).dispatch(*args, **kwargs)
+#
+#
+# class AlterarSecretario(UpdateView):
+#         form_class = CadastrarSecretarioForm
+#         model = Secretario
+#         template_name = 'secretario/cadastrar_secretario.html'
+#         success_url = reverse_lazy('adesao:sucesso_secretario')
 
 
 class MinutaAcordo(PDFTemplateView):

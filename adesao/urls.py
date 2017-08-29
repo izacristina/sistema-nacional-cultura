@@ -45,19 +45,19 @@ urlpatterns = [
     url(r'^responsavel/(?P<pk>[0-9]+)/$',
         login_required(views.AlterarResponsavel.as_view()),
         name='alterar_responsavel'),
-    url(r'^importar/secretario/$',
-        views.importar_secretario,
-        name='importar_secretario'),
-
-    # Cadastro e alteração de secretário
-    url(r'^secretario/$', login_required(views.CadastrarSecretario.as_view()),
-        name='secretario'),
-    url(r'^sucesso-cadastro-secretario/$',
-        views.sucesso_secretario,
-        name='sucesso_secretario'),
-    url(r'^secretario/(?P<pk>[0-9]+)/$',
-        login_required(views.AlterarSecretario.as_view()),
-        name='alterar_secretario'),
+    # url(r'^importar/secretario/$',
+    #     views.importar_secretario,
+    #     name='importar_secretario'),
+    #
+    # # Cadastro e alteração de secretário
+    # url(r'^secretario/$', login_required(views.CadastrarSecretario.as_view()),
+    #     name='secretario'),
+    # url(r'^sucesso-cadastro-secretario/$',
+    #     views.sucesso_secretario,
+    #     name='sucesso_secretario'),
+    # url(r'^secretario/(?P<pk>[0-9]+)/$',
+    #     login_required(views.AlterarSecretario.as_view()),
+    #     name='alterar_secretario'),
 
     # Cadastro e alteração de cadastrador
     url(r'^alterar/cadastrador/$',
