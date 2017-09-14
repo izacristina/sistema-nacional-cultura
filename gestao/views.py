@@ -206,8 +206,6 @@ def situacao_6 (request, etapa, st, id):
     return redirect('gestao:detalhar', pk=id)
 
 
-
-
 class DetalharUsuario(DetailView):
     model = Usuario
     template_name = 'gestao/detalhe_municipio.html'
@@ -216,21 +214,7 @@ class DetalharUsuario(DetailView):
         context = super(DetalharUsuario, self).get_context_data(**kwargs)
         situacao = context['usuario'].estado_processo
         try:
-
             if situacao == '3':
-                historico = Historico.objects.filter(usuario_id=context['usuario'].id)
-                historico = historico[0]
-                context['dado_situacao'] = historico.descricao
-
-            elif situacao == '2':
-                municipio = Municipio.objects.get(usuario__id=context['usuario'].id)
-                context['dado_situacao'] = municipio.localizacao
-
-            elif situacao == '4':
-                municipio = Municipio.objects.get(usuario__id=context['usuario'].id)
-                context['dado_situacao'] = municipio.numero_processo
-
-            elif situacao == '6':
                 context['dado_situacao'] = context['usuario'].data_publicacao_acordo.strftime('%d/%m/%Y')
         except:
             pass

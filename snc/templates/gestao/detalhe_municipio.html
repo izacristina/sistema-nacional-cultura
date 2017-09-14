@@ -115,7 +115,7 @@
     </div>
 </div>
 
-{% if object.estado_processo == '6' %}
+{% if object.estado_processo == '3' %}
 <div class="panel panel-info">
   <div class="panel-heading">
     Dados do Plano de Trabalho
@@ -494,18 +494,12 @@
                           <select id="select_situacoes" name="estado_processo" class="form-control">
                               <option value="1" {% if object.estado_processo == '1' %}selected{% endif %}>Aguardando envio da documentação</option>
                               <option value="2" {% if object.estado_processo == '2' %}selected{% endif %}>Documentação Recebida - Aguarda Análise</option>
-                              <option value="3" {% if object.estado_processo == '3' %}selected{% endif %}>Diligência Documental</option>
-                              <option value="4" {% if object.estado_processo == '4' %}selected{% endif %}>Encaminhado para assinatura do Secretário SAI</option>
-                              <option value="5" {% if object.estado_processo == '5' %}selected{% endif %}>Aguarda Publicação no DOU</option>
-                              <option value="6" {% if object.estado_processo == '6' %}selected{% endif %}>Publicado no DOU</option>
+                              <option value="3" {% if object.estado_processo == '3' %}selected{% endif %}>Publicado no DOU</option>
                             </select>
                       </div>
 
                       <div class="form-group">
-                        <textarea id="justificativa_situacao" name="justificativa" class="form-control hide" style="resize:none" placeholder="Justificativa" rows="4" cols="20">{% if object.estado_processo == '3' %} {{dado_situacao}} {% endif %}</textarea>
-                        <input type="text" id="data_acordo_situacao" name="data_publicacao_acordo" class="form-control date hide" value="{% if object.estado_processo == '6' %} {{dado_situacao}} {% endif %}" placeholder="Data de Publicação"></input>
-                        <input type="text" id="localizacao_situacao" name="localizacao" class="form-control hide" placeholder="Localização" value="{% if object.estado_processo == '2' %} {{dado_situacao}} {% endif %}"></input>
-                        <input type="text" id="num_processo_situacao" name="num_processo" class="form-control hide" placeholder="Número do Processo" value="{% if object.estado_processo == '4' %} {{dado_situacao}} {% endif %}"></input>
+                        <input type="text" id="data_acordo_situacao" name="data_publicacao_acordo" class="form-control date hide" value="{% if object.estado_processo == '3' %} {{dado_situacao}} {% endif %}" placeholder="Data de Publicação"></input>
                       </div>
                       <div class="row">
                           <div class="col-md-12">
@@ -530,43 +524,7 @@
     var situacao_campos = function(e){
 
 
-      if($('#select_situacoes').val()==="2"){
-        $("input[id$='_situacao'], textarea[id$='_situacao']").each(function(){
-          if(!$(this).hasClass('hide')){
-            $(this).addClass('hide');
-            $(this).fadeIn();
-          }
-        });
-        if($("#localizacao_situacao").hasClass('hide')){
-          $("#localizacao_situacao").removeClass('hide');
-          $("#localizacao_situacao").fadeIn();
-        }
-      }
-      else if($('#select_situacoes').val()==="3"){
-        $("input[id$='_situacao'], textarea[id$='_situacao']").each(function(){
-          if(!$(this).hasClass('hide')){
-            $(this).addClass('hide');
-            $(this).fadeIn();
-          }
-        });
-        if($("#justificativa_situacao").hasClass('hide')){
-          $("#justificativa_situacao").removeClass('hide');
-          $("#justificativa_situacao").fadeIn();
-        }
-      }
-      else if($('#select_situacoes').val()==="4"){
-        $("input[id$='_situacao'], textarea[id$='_situacao']").each(function(){
-          if(!$(this).hasClass('hide')){
-            $(this).addClass('hide');
-            $(this).fadeIn();
-          }
-        });
-        if($("#num_processo_situacao").hasClass('hide')){
-          $("#num_processo_situacao").removeClass('hide');
-          $("#num_processo_situacao").fadeIn();
-        }
-      }
-      else if($('#select_situacoes').val()==="6"){
+      if($('#select_situacoes').val()==="3"){
         $("input[id$='_situacao'], textarea[id$='_situacao']").each(function(){
           if(!$(this).hasClass('hide')){
             $(this).addClass('hide');

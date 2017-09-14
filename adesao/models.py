@@ -8,11 +8,8 @@ LISTA_ESTADOS_PROCESSO = (
     ('0', 'Aguardando preenchimento dos dados cadastrais'),
     ('1', 'Aguardando envio da documentação'),
     ('2', 'Documentação Recebida - Aguarda Análise'),
-    ('3', 'Diligência Documental'),
-    ('4', 'Encaminhado para assinatura do Secretário SAI'),
-    ('5', 'Aguarda Publicação no DOU'),
-    ('6', 'Publicado no DOU'),
-    ('7', 'Responsável confirmado'),)
+    ('3', 'Publicado no DOU'),
+    ('4', 'Responsável confirmado'),)
 
 
 # Create your models here.
@@ -43,7 +40,6 @@ class Cidade(models.Model):
 
 
 class Municipio(models.Model):
-    localizacao = models.CharField(max_length=50, blank=True)
     numero_processo = models.CharField(max_length=50, blank=True)
     cpf_prefeito = models.CharField(
         max_length=14,
