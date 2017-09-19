@@ -8,8 +8,9 @@ LISTA_ESTADOS_PROCESSO = (
     ('0', 'Aguardando preenchimento dos dados cadastrais'),
     ('1', 'Aguardando envio da documentação'),
     ('2', 'Documentação Recebida - Aguarda Análise'),
-    ('3', 'Publicado no DOU'),
-    ('4', 'Responsável confirmado'),)
+    ('3', 'Diligência Documental'),
+    ('4', 'Publicado no DOU'),
+    ('5', 'Responsável confirmado'),)
 
 
 # Create your models here.
