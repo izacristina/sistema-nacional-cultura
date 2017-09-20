@@ -11,7 +11,7 @@
   <p>
     {% blocktrans %}Quarto parágrafo da tela inicial do Plano de Trabalho{% endblocktrans %}
   </p>
-  {% if request.user.usuario.estado_processo == '6' %}
+  {% if request.user.usuario.estado_processo == '4' %}
   <p>
     <strong>Data final de envio dos componentes:</strong> {{ data_final}}<br>
   </p>
@@ -30,7 +30,7 @@
       {% if request.user.usuario.plano_trabalho.criacao_sistema.situacao_lei_sistema.id != 2 %}
       {% if request.user.usuario.plano_trabalho.criacao_sistema.situacao_lei_sistema.id == 1 %}
       <a class="btn btn-warning" style="color:#FFF" href="{% url 'planotrabalho:sistema' %}">Aguarda Análise</a>
-      {% elif request.user.usuario.estado_processo == '6' %}
+      {% elif request.user.usuario.estado_processo == '4' %}
       <a class="btn btn-success" style="color:#FFF" href="{% url 'planotrabalho:sistema' %}">Enviar Comprovação</a>
       {% endif %}
       {% endif %}
@@ -49,7 +49,7 @@
         {% if request.user.usuario.plano_trabalho.orgao_gestor.situacao_relatorio_secretaria.id != 2 %}
         {% if request.user.usuario.plano_trabalho.orgao_gestor.situacao_relatorio_secretaria.id == 1 %}
         <a class="btn btn-warning" style="color:#FFF" href="{% url 'planotrabalho:gestor' %}">Aguarda Análise</a>
-        {% elif request.user.usuario.estado_processo == '6' %}
+        {% elif request.user.usuario.estado_processo == '4' %}
         <a class="btn btn-success" style="color:#FFF" href="{% url 'planotrabalho:gestor' %}" />Enviar Comprovação</a>
         {% endif %}
         {% endif %}
@@ -60,7 +60,7 @@
         {% if request.user.usuario.plano_trabalho.conselho_cultural.situacao_ata.id != 2 %}
         {% if request.user.usuario.plano_trabalho.conselho_cultural.situacao_ata.id == 1 %}
         <a class="btn btn-warning" style="color:#FFF" href="{% url 'planotrabalho:conselho' %}">Aguarda Análise</a>
-        {% elif request.user.usuario.estado_processo == '6'%}
+        {% elif request.user.usuario.estado_processo == '4'%}
         <a class="btn btn-success" style="color:#FFF" href="{% url 'planotrabalho:conselho' %}" >Enviar Comprovação</a>
         {% endif %}
         {% endif %}
@@ -71,7 +71,7 @@
         {% if request.user.usuario.plano_trabalho.fundo_cultura.situacao_lei_plano.id != 2 %}
         {% if request.user.usuario.plano_trabalho.fundo_cultura.situacao_lei_plano.id == 1 %}
         <a class="btn btn-warning" style="color:#FFF" href="{% url 'planotrabalho:fundo' %}">Aguarda Análise</a>
-        {% elif request.user.usuario.estado_processo == '6'%}
+        {% elif request.user.usuario.estado_processo == '4'%}
         <a class="btn btn-success" style="color:#FFF" href="{% url 'planotrabalho:fundo' %}" >Enviar Comprovação</a>
         {% endif %}
         {% endif %}
@@ -89,7 +89,7 @@
         {% if request.user.usuario.plano_trabalho.plano_cultura.situacao_lei_plano.id != 2 %}
         {% if request.user.usuario.plano_trabalho.plano_cultura.situacao_lei_plano.id == 1 %}
         <a class="btn btn-warning" style="color:#FFF" href="{% url 'planotrabalho:plano' %}">Aguarda Análise</a>
-        {% elif request.user.usuario.estado_processo == '6'%}
+        {% elif request.user.usuario.estado_processo == '4'%}
         <a class="btn btn-success" style="color:#FFF" href="{% url 'planotrabalho:plano' %}" >Enviar Comprovação</a>
         {% endif %}
         {% endif %}

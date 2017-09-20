@@ -497,7 +497,7 @@ class ConsultarMunicipios(ListView):
         if ente_federado:
             return usuarios.filter(cidade__nome_municipio__icontains=ente_federado)
 
-        return usuarios.filter(usuario__estado_processo='6').order_by('cidade__nome_municipio')
+        return usuarios.filter(usuario__estado_processo='4').order_by('cidade__nome_municipio')
 
 
 class ConsultarEstados(ListView):
@@ -567,7 +567,7 @@ class RelatorioAderidos(ListView):
             lista_uf[uf.codigo_ibge] = uf.sigla
 
         municipios_by_uf = Municipio.objects.values('estado_id').filter(
-            usuario__estado_processo='6',
+            usuario__estado_processo='4',
             cidade_id__isnull=False
             ).annotate(
                 municipios_aderiram=Count('estado_id')
@@ -614,9 +614,9 @@ class ConsultarPlanoTrabalhoMunicipio(ListView):
         if ente_federado:
             return Usuario.objects.filter(
                 municipio__cidade__nome_municipio__icontains=ente_federado,
-                estado_processo='6')
+                estado_processo='4')
 
-        return Usuario.objects.filter(estado_processo='6').order_by('municipio__cidade__nome_municipio')
+        return Usuario.objects.filter(estado_processo='4').order_by('municipio__cidade__nome_municipio')
 
 
 class ConsultarPlanoTrabalhoEstado(ListView):

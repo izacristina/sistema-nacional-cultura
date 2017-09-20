@@ -69,7 +69,7 @@ class AlterarSituacao(ModelForm):
 
     def clean(self):
         try:
-            if self.cleaned_data['estado_processo'] == '6':
+            if self.cleaned_data['estado_processo'] == '4':
                 if not self.cleaned_data['data_publicacao_acordo']:
                     raise forms.ValidationError('Insira a data corretamente.')
         except:
@@ -86,8 +86,6 @@ class AlterarSituacao(ModelForm):
         elif self.cleaned_data['estado_processo'] == '3':
             historico.descricao = self.cleaned_data['justificativa']
         elif self.cleaned_data['estado_processo'] == '4':
-            usuario.municipio.numero_processo = self.cleaned_data['num_processo']
-        elif self.cleaned_data['estado_processo'] == '6':
             if usuario.plano_trabalho is None:
                 plano_trabalho = PlanoTrabalho()
 
@@ -227,7 +225,7 @@ class AlterarCadastradorForm(ChainedChoicesForm):
 
             if user_antigo.user.username == user_novo.user.username:
                 raise forms.ValidationError('Cadastrador já se encontra vinculado ao municípío selecionado.')
-            if user_antigo.estado_processo == '6':
+            if user_antigo.estado_processo == '4':
                 if not user_antigo.data_publicacao_acordo or not self.cleaned_data.get('data_publicacao_acordo', None):
                     errormsg = '''Não foi encontrada a data de publicação
                         do acordo deste município, por favor informe a data'''
