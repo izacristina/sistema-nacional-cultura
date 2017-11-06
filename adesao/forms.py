@@ -5,7 +5,7 @@ from django.utils.crypto import get_random_string
 from django.forms import ModelForm
 from django.template.defaultfilters import filesizeformat
 
-from .models import Usuario, Municipio, Responsavel, Secretario
+from .models import Usuario, Municipio, Responsavel
 from .utils import validar_cpf, validar_cnpj, limpar_mascara
 import re
 
@@ -154,16 +154,16 @@ class CadastrarMunicipioForm(ModelForm):
         fields = '__all__'
 
 
-class CadastrarSecretarioForm(ModelForm):
-    def clean_cpf_secretario(self):
-        if not validar_cpf(self.cleaned_data['cpf_secretario']):
-            raise forms.ValidationError('Por favor, digite um CPF válido!')
-
-        return self.cleaned_data['cpf_secretario']
-
-    class Meta:
-        model = Secretario
-        fields = '__all__'
+# class CadastrarSecretarioForm(ModelForm):
+#     def clean_cpf_secretario(self):
+#         if not validar_cpf(self.cleaned_data['cpf_secretario']):
+#             raise forms.ValidationError('Por favor, digite um CPF válido!')
+#
+#         return self.cleaned_data['cpf_secretario']
+#
+#     class Meta:
+#         model = Secretario
+#         fields = '__all__'
 
 
 class CadastrarResponsavelForm(ModelForm):

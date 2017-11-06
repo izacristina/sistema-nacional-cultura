@@ -122,7 +122,7 @@ class AcompanharPrazo(ListView):
                 municipio__estado__nome_uf__icontains=ente_federado).order_by('municipio__estado__nome_uf')
 
             return municipio | estado
-        return Usuario.objects.filter(estado_processo='6', data_publicacao_acordo__isnull=False).order_by(
+        return Usuario.objects.filter(estado_processo='4', data_publicacao_acordo__isnull=False).order_by(
             'municipio__estado__nome_uf')
 
 
@@ -190,25 +190,29 @@ def concluir_etapa(request, etapa, st, id):
     return redirect('gestao:detalhar', pk=id)
 
 
+
 def situacao_3 (request, etapa, st, id):
     usuario = Usuario.objects.get(id=id)
     setattr(getattr(usuario.plano_trabalho, etapa), st, 3)
     getattr(usuario.plano_trabalho, etapa).save()
     return redirect('gestao:detalhar', pk=id)
 
-def situacao_4 (request, etapa, st, id):
+
+def situacao_4(request, etapa, st, id):
     usuario = Usuario.objects.get(id=id)
     setattr(getattr(usuario.plano_trabalho, etapa), st, 4)
     getattr(usuario.plano_trabalho, etapa).save()
     return redirect('gestao:detalhar', pk=id)
 
-def situacao_5 (request, etapa, st, id):
+
+def situacao_5(request, etapa, st, id):
     usuario = Usuario.objects.get(id=id)
     setattr(getattr(usuario.plano_trabalho, etapa), st, 5)
     getattr(usuario.plano_trabalho, etapa).save()
     return redirect('gestao:detalhar', pk=id)
 
-def situacao_6 (request, etapa, st, id):
+
+def situacao_6(request, etapa, st, id):
     usuario = Usuario.objects.get(id=id)
     setattr(getattr(usuario.plano_trabalho, etapa), st, 6)
     getattr(usuario.plano_trabalho, etapa).save()
@@ -323,8 +327,6 @@ class AcompanharPlano(ListView):
 
         return usuarios
 
-#Teste Christian
-
 
 class DetalharUsuario(DetailView):
     model = Usuario
@@ -334,21 +336,12 @@ class DetalharUsuario(DetailView):
         context = super(DetalharUsuario, self).get_context_data(**kwargs)
         situacao = context['usuario'].estado_processo
         try:
-
             if situacao == '3':
                 historico = Historico.objects.filter(usuario_id=context['usuario'].id)
                 historico = historico[0]
                 context['dado_situacao'] = historico.descricao
 
-            elif situacao == '2':
-                municipio = Municipio.objects.get(usuario__id=context['usuario'].id)
-                context['dado_situacao'] = municipio.localizacao
-
             elif situacao == '4':
-                municipio = Municipio.objects.get(usuario__id=context['usuario'].id)
-                context['dado_situacao'] = municipio.numero_processo
-
-            elif situacao == '6':
                 context['dado_situacao'] = context['usuario'].data_publicacao_acordo.strftime('%d/%m/%Y')
         except:
             pass
@@ -420,7 +413,7 @@ class InserirSistema(ListView):
     def get_queryset(self):
         q = self.request.GET.get('q', None)
 
-        usuarios = Usuario.objects.filter(estado_processo='6')
+        usuarios = Usuario.objects.filter(estado_processo='4')
         usuarios = usuarios.exclude(plano_trabalho__criacao_sistema=None)
 
         if q:
@@ -445,7 +438,7 @@ class InserirOrgao(ListView):
 
     def get_queryset(self):
         q = self.request.GET.get('q', None)
-        usuarios = Usuario.objects.filter(estado_processo='6')
+        usuarios = Usuario.objects.filter(estado_processo='4')
         usuarios = usuarios.exclude(plano_trabalho__orgao_gestor=None)
 
         if q:
@@ -469,7 +462,7 @@ class InserirConselho(ListView):
 
     def get_queryset(self):
         q = self.request.GET.get('q', None)
-        usuarios = Usuario.objects.filter(estado_processo='6')
+        usuarios = Usuario.objects.filter(estado_processo='4')
         usuarios = usuarios.exclude(plano_trabalho__conselho_cultural=None)
 
         if q:
@@ -493,7 +486,7 @@ class InserirFundo(ListView):
 
     def get_queryset(self):
         q = self.request.GET.get('q', None)
-        usuarios = Usuario.objects.filter(estado_processo='6')
+        usuarios = Usuario.objects.filter(estado_processo='4')
         usuarios = usuarios.exclude(plano_trabalho__fundo_cultura=None)
 
         if q:
@@ -517,7 +510,7 @@ class InserirPlano(ListView):
 
     def get_queryset(self):
         q = self.request.GET.get('q', None)
-        usuarios = Usuario.objects.filter(estado_processo='6')
+        usuarios = Usuario.objects.filter(estado_processo='4')
         usuarios = usuarios.exclude(plano_trabalho__plano_cultura=None)
 
         if q:
@@ -542,7 +535,7 @@ class Prorrogacao(ListView):
 
     def get_queryset(self):
         q = self.request.GET.get('q', None)
-        usuarios = Usuario.objects.filter(estado_processo='6')
+        usuarios = Usuario.objects.filter(estado_processo='4')
 
         usuarios = usuarios.exclude(
             plano_trabalho__conselho_cultural=None,
