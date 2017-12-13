@@ -126,7 +126,7 @@ CORS_URLS_REGEX = r'^/v1/.*$'
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default='naoresponda@cultura.gov.br')
 EMAIL_HOST = env('EMAIL_HOST', default='localhost')
 EMAIL_PORT = env('EMAIL_PORT', default=1025)
-EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
 
 # MANAGER CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
