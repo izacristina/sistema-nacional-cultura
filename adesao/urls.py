@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^usuario/$', views.CadastrarUsuario.as_view(), name='usuario'),
     url(r'^faleconosco/$', views.fale_conosco, name='faleconosco'),
 
-    # Cadastro e alteração de prefeitura
+    # Cadastro e alteração de ente federado 
     url(r'^municipio/selecionar$', views.selecionar_tipo_ente,
         name='selecionar_tipo_ente'),
     url(r'^municipio/$', login_required(views.CadastrarMunicipio.as_view()),
@@ -29,9 +29,12 @@ urlpatterns = [
     url(r'^sucesso-cadastro-prefeitura/$',
         views.sucesso_municipio,
         name='sucesso_municipio'),
-    url(r'^municipio/cadastrar/(?P<tipo_ente>\d+)/$',
+    url(r'^municipio/cadastrar/0/$',
         login_required(views.CadastrarMunicipio.as_view()),
         name='cadastrar_municipio'),
+    url(r'^municipio/cadastrar/1/$',
+        login_required(views.CadastrarEstado.as_view()),
+        name='cadastrar_estado'),
     url(r'^municipio/(?P<pk>[0-9]+)/$',
         login_required(views.AlterarMunicipio.as_view()),
         name='alterar_municipio'),

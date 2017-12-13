@@ -19,7 +19,7 @@ from django.db.models import Q, Count
 
 from adesao.models import Municipio, Responsavel, Secretario, Usuario, Historico, Uf, Cidade
 from planotrabalho.models import Conselheiro, PlanoTrabalho
-from adesao.forms import CadastrarUsuarioForm, CadastrarMunicipioForm
+from adesao.forms import CadastrarUsuarioForm, CadastrarMunicipioForm, CadastrarEstadoForm
 from adesao.forms import CadastrarResponsavelForm, CadastrarSecretarioForm
 from adesao.utils import enviar_email_conclusao, verificar_anexo
 
@@ -333,7 +333,7 @@ class CadastrarMunicipio(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(CadastrarMunicipio, self).get_context_data(**kwargs)
-        context['tipo_ente'] = self.kwargs['tipo_ente']
+        # context['tipo_ente'] = self.kwargs['tipo_ente']
         return context
 
     def form_valid(self, form):
@@ -353,11 +353,38 @@ class CadastrarMunicipio(CreateView):
         kwargs['user'] = self.request.user.usuario
         return kwargs
 
+class CadastrarEstado(CreateView):
+    form_class = CadastrarEstadoForm
+    template_name = 'prefeitura/cadastrar_estado.html'
+    success_url = reverse_lazy('adesao:sucesso_municipio')
+
+    def get_context_data(self, **kwargs):
+        context = super(CadastrarEstado, self).get_context_data(**kwargs)
+        # context['tipo_ente'] = self.kwargs['tipo_ente']
+        return context
+
+    def form_valid(self, form):
+        self.request.user.usuario.municipio = form.save()
+        self.request.user.usuario.save()
+        return super(CadastrarEstado, self).form_valid(form)
+
+    def dispatch(self, *args, **kwargs):
+        municipio = self.request.user.usuario.municipio
+        if municipio:
+            return redirect('adesao:alterar_municipio', pk=municipio.id)
+
+        return super(CadastrarEstado, self).dispatch(*args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super(CadastrarEstado, self).get_form_kwargs()
+        kwargs['user'] = self.request.user.usuario
+        return kwargs
+
 
 class AlterarMunicipio(UpdateView):
     form_class = CadastrarMunicipioForm
     model = Municipio
-    template_name = 'prefeitura/cadastrar_prefeitura.html'
+    template_name = 'prefeitura/cadastrar_municipio.html'
     success_url = reverse_lazy('adesao:sucesso_municipio')
 
     def dispatch(self, *args, **kwargs):
