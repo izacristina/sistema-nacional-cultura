@@ -108,7 +108,7 @@ class CadastrarUsuarioForm(UserCreationForm):
         return user
 
 
-class CadastrarMunicipioForm(ModelForm):
+class CadastrarAdesaoForm(ModelForm):
     termo_posse_prefeito = RestrictedFileField(
         content_types=content_types,
         max_upload_size=5242880)
@@ -119,9 +119,6 @@ class CadastrarMunicipioForm(ModelForm):
         content_types=content_types,
         max_upload_size=5242880)
 
-    def __init__(self, *args, **kwargs):
-        self.usuario = kwargs.pop('user')
-        super(CadastrarMunicipioForm, self).__init__(*args, **kwargs)
 
     def clean_cpf_prefeito(self):
         if not validar_cpf(self.cleaned_data['cpf_prefeito']):
@@ -135,8 +132,18 @@ class CadastrarMunicipioForm(ModelForm):
 
         return self.cleaned_data['cnpj_prefeitura']
 
+    class Meta:
+        model = Municipio
+        fields = '__all__'
+
+class CadastrarEstadoForm(CadastrarAdesaoForm):
+
+    def __init__(self, *args, **kwargs):
+        self.usuario = kwargs.pop('user')
+        super(CadastrarEstadoForm, self).__init__(*args, **kwargs)
+
     def clean(self):
-        super(CadastrarMunicipioForm, self).clean()
+        super(CadastrarAdesaoForm, self).clean()
 
         if 'estado' in self.changed_data or 'cidade' in self.changed_data:
             if self.usuario.estado_processo == '6':
@@ -148,6 +155,29 @@ class CadastrarMunicipioForm(ModelForm):
                     cidade__isnull=True)
                 if estado_validacao:
                     self.add_error('estado', 'Este estado já foi cadastrado!')
+
+    class Meta:
+        model = Municipio
+        fields = '__all__'
+
+class CadastrarMunicipioForm(CadastrarAdesaoForm):
+
+    def __init__(self, *args, **kwargs):
+        self.usuario = kwargs.pop('user')
+        super(CadastrarMunicipioForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        super(CadastrarAdesaoForm, self).clean()
+
+        if 'estado' in self.changed_data and 'cidade' in self.changed_data:
+            if self.usuario.estado_processo == '6':
+                self.add_error('estado', '''Não é possivel modificar o município ou estado após a
+                 publicação do plano de trabalho no DOU. Em caso de dúvida entre em contato através do Fale Conosco.''')
+
+            municipio_validacao = Municipio.objects.filter(
+                cidade__nome_municipio=self.cleaned_data['cidade'])
+            if municipio_validacao:
+                self.add_error('estado', 'Este município já foi cadastrado!')
 
     class Meta:
         model = Municipio
