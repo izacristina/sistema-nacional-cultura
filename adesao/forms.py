@@ -178,6 +178,8 @@ class CadastrarMunicipioForm(CadastrarAdesaoForm):
                 cidade__nome_municipio=self.cleaned_data['cidade'])
             if municipio_validacao:
                 self.add_error('estado', 'Este município já foi cadastrado!')
+        else:
+            self.add_error('cidade', 'Este campo é obrigatório.')
 
     class Meta:
         model = Municipio
