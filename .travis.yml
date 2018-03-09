@@ -5,7 +5,9 @@ python:
 install:
     - pip install --upgrade pipenv
     - pipenv install --three --dev
-    - pipenv install django==1.8.18 
+    - pipenv uninstall django 
+    - pipenv install django==1.8.18; django=<1.11
 
 script:
     - pipenv run pytest
+
