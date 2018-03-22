@@ -1,7 +1,6 @@
 import datetime
 
 from django.db import models
-from django.db.models.fields.related import RelatedObjectDoesNotExist
 from django.utils.text import slugify
 from django.contrib.contenttypes.fields import GenericRelation
 
@@ -14,27 +13,15 @@ SITUACAO_CONSELHEIRO = (
 
 
 def upload_to_componente(instance, filename):
-    name = ''
     ext = slugify(filename.split('.').pop(-1))
     new_name = slugify(filename.rsplit('.', 1)[0])
+    entefederado = instance.planotrabalho.usuario.municipio.id
     componente = instance._meta.object_name.lower()
-    try:
-        entefederado = instance.planotrabalho.usuario.municipio.id
-        name = "{entefederado}/docs/{componente}/{new_name}.{ext}".format(
-            entefederado=entefederado,
-            componente=componente,
-            new_name=new_name,
-            ext=ext)
-    except RelatedObjectDoesNotExist:
-        plano_id = instance.planotrabalho.id
-        name = "sem_ente_federado/{plano_id}docs/{componente}/{new_name}.{ext}".format(
-                plano_id=plano_id,
-                componente=componente,
-                new_name=new_name,
-                ext=ext)
-
-    return name
-
+    return "{entefederado}/docs/{componente}/{new_name}.{ext}".format(
+        entefederado=entefederado,
+        componente=componente,
+        new_name=new_name,
+        ext=ext)
 
 
 class ArquivoComponente(models.Model):
