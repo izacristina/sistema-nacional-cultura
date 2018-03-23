@@ -10,7 +10,7 @@ def migra_arquivo_criacao_sistema(apps, schema_editor):
 
     CriacaoSistema = apps.get_model("planotrabalho", "CriacaoSistema")
     for sistema in CriacaoSistema.objects.all():
-        if sistema.lei_sistema_cultura.file:
+        if sistema.lei_sistema_cultura:
             file = sistema.lei_sistema_cultura.file
             file_name = file.name.split('/')[-1]
             sistema.arquivo.save(file_name, file)
@@ -22,7 +22,7 @@ def migra_arquivo_orgao_gestor(apps, schema_editor):
 
     OrgaoGestor = apps.get_model("planotrabalho", "OrgaoGestor")
     for orgao in OrgaoGestor.objects.all():
-        if orgao.relatorio_atividade_secretaria.file:
+        if orgao.relatorio_atividade_secretaria:
             file = orgao.relatorio_atividade_secretaria.file
             file_name = file.name.split('/')[-1]
             orgao.arquivo.save(file_name, file)
@@ -34,7 +34,7 @@ def migra_arquivo_conselho_cultural(apps, schema_editor):
 
     ConselhoCultural = apps.get_model("planotrabalho", "ConselhoCultural")
     for conselho in ConselhoCultural.objects.all():
-        if conselho.ata_regimento_aprovado.file:
+        if conselho.ata_regimento_aprovado:
             file = conselho.ata_regimento_aprovado.file
             file_name = file.name.split('/')[-1]
             conselho.arquivo.save(file_name, file)
@@ -46,7 +46,7 @@ def migra_arquivo_fundo_cultura(apps, schema_editor):
 
     FundoCultura = apps.get_model("planotrabalho", "FundoCultura")
     for fundo in FundoCultura.objects.all():
-        if fundo.lei_fundo_cultura.file:
+        if fundo.lei_fundo_cultura:
             file = fundo.lei_fundo_cultura.file
             file_name = file.name.split('/')[-1]
             fundo.arquivo.save(file_name, file)
@@ -58,7 +58,7 @@ def migra_arquivo_plano_cultura(apps, schema_editor):
 
     PlanoCultura = apps.get_model("planotrabalho", "PlanoCultura")
     for plano in PlanoCultura.objects.all():
-        if plano.lei_plano_cultura.file:
+        if plano.lei_plano_cultura:
             file = plano.lei_plano_cultura.file
             file_name = file.name.split('/')[-1]
             plano.arquivo.save(file_name, file)
