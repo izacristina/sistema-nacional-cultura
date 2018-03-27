@@ -37,7 +37,7 @@ def upload_to_componente(instance, filename):
 class ArquivoComponente(models.Model):
     arquivo = models.FileField(upload_to=upload_to_componente, null=True, blank=True)
     situacao = models.ForeignKey('SituacoesArquivoPlano', related_name='%(class)s_situacao', default=0)
-    data_envio = models.DateField(editable=False)
+    data_envio = models.DateField(editable=False, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         '''Ao salvar, atualize data_envio'''
