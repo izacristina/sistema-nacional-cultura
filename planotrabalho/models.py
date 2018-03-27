@@ -90,7 +90,7 @@ class CriacaoSistema(ArquivoComponente):
         null=True)
     diligencias = GenericRelation(Diligencia, content_type_field="componente_type",
                                   object_id_field="componente_id")
-    situacao_lei_sistema = models.ForeignKey('SituacoesArquivoPlano')
+    situacao_lei_sistema = models.ForeignKey('SituacoesArquivoPlano', default=0)
 
 
 class OrgaoGestor(ArquivoComponente):
