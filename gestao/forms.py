@@ -93,17 +93,19 @@ class AlterarSituacao(ModelForm):
             if usuario.plano_trabalho is None:
                 plano_trabalho = PlanoTrabalho()
 
+                situacao = SituacoesArquivoPlano.objects.get(pk=0)
+
                 conselho_cultural = ConselhoCultural()
                 criacao_sistema = CriacaoSistema()
                 fundo_cultura = FundoCultura()
                 orgao_gestor = OrgaoGestor()
                 plano_cultura = PlanoCultura()
 
-                conselho_cultural.situacao.id = 0
-                criacao_sistema.situacao.id = 0
-                fundo_cultura.situacao.id = 0
-                orgao_gestor.situacao.id = 0
-                plano_cultura.situacao.id = 0
+                conselho_cultural.situacao = situacao
+                criacao_sistema.situacao = situacao
+                fundo_cultura.situacao = situacao
+                orgao_gestor.situacao = situacao
+                plano_cultura.situacao = situacao
 
                 if commit:
                     criacao_sistema.save()
@@ -137,11 +139,11 @@ class AlterarSituacao(ModelForm):
                 orgao_gestor = OrgaoGestor()
                 plano_cultura = PlanoCultura()
 
-                conselho_cultural.situacao.id = 0
-                criacao_sistema.situacao.id = 0
-                fundo_cultura.situacao.id = 0
-                orgao_gestor.situacao.id = 0
-                plano_cultura.situacao.id = 0
+                conselho_cultural.situacao = situacao
+                criacao_sistema.situacao = situacao
+                fundo_cultura.situacao = situacao
+                orgao_gestor.situacao = situacao
+                plano_cultura.situacao = situacao
 
                 if commit:
                     criacao_sistema.save()
