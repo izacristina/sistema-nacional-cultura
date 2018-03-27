@@ -137,11 +137,11 @@ class AlterarSituacao(ModelForm):
                 orgao_gestor = OrgaoGestor()
                 plano_cultura = PlanoCultura()
 
-                conselho_cultural.situacao_ata_id = 0
-                criacao_sistema.situacao_lei_sistema_id = 0
-                fundo_cultura.situacao_lei_plano_id = 0
-                orgao_gestor.situacao_relatorio_secretaria_id = 0
-                plano_cultura.situacao_lei_plano_id = 0
+                conselho_cultural.situacao.id = 0
+                criacao_sistema.situacao.id = 0
+                fundo_cultura.situacao.id = 0
+                orgao_gestor.situacao.id = 0
+                plano_cultura.situacao.id = 0
 
                 if commit:
                     criacao_sistema.save()
