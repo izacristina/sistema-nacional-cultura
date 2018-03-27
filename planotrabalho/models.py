@@ -1,4 +1,4 @@
-import datetime
+from datetime import date
 
 from django.db import models
 from django.utils.text import slugify
@@ -37,7 +37,13 @@ def upload_to_componente(instance, filename):
 class ArquivoComponente(models.Model):
     arquivo = models.FileField(upload_to=upload_to_componente, null=True, blank=True)
     situacao = models.ForeignKey('SituacoesArquivoPlano', related_name='%(class)s_situacao', default=0)
-    data_envio = models.DateField(default=datetime.date.today)
+    data_envio = models.DateField(editable=False)
+
+    def save(self, *args, **kwargs):
+        '''Ao salvar, atualize data_envio'''
+        if not self.id or self.data_envio:
+            self.data_envio = date.today()
+        return super(ArquivoComponente, self).save(*args, **kwargs)
 
     class Meta:
         abstract = True
